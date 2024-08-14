@@ -4,55 +4,63 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
     <title>LaunchDarkly tutorial</title>
-    <script src="https://unpkg.com/launchdarkly-js-client-sdk@3"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/monokai.min.css">
+    
     <link rel="stylesheet" href="./index.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "launchdarkly-js-client-sdk": "https://unpkg.com/launchdarkly-js-client-sdk@3.4.0/dist/ldclient.es.js?module",
+          "highlight.js/":"https://unpkg.com/@highlightjs/cdn-assets@11.9.0/es/"
+         
+        }
+      }
+    </script>
+
+    
+    <script src="./main.js" type=module></script>
   </head>
   <body>
-    <script>
-    function main()
-    {
-      // Set clientSideID to your LaunchDarkly client-side ID
-      const clientSideID = '';
+    <h1>Multi-Client Test Page</h1>
+    <p>
+      <form action="/">
+        
+      <div>
+        <label for="bootstrap">LaunchDarkly Client-side ID</label>
+        <input name="clientId" type="text" placeholder="Client-side ID" id="clientId"/>
+      </div>
+      <div>
+        <label for="bootstrap">Flag Key</label>
+        <input name="flagKey" type="text" placeholder="flag-key" id="flagKey"/>
+      </div>
+      <div>
+        <label for="bootstrap">Use Bootstrap</label>
+        <input type="checkbox" id="bootstrap" name="bootstrap" value="true" />
+        
+      </div>
+        <input type="submit" value="Update Settings" id="submit"/>
+      </form>
+    </p>
+    <hr/>
+    <table id="context-table">
+      <thead>
+        <tr>
+          <th>Context</th>
+          <th>Value</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
 
-      // Set flagKey to the feature flag key you want to evaluate
-      const flagKey = 'sample-feature';
-
-      // Set up the evaluation context. This context should appear on your
-      // LaunchDarkly contexts dashboard soon after you run the demo.
-      const context = {
-        kind: 'user',
-        key: 'example-user-key',
-        name: 'Sandy'
-      };
-
-      var div = document.createElement('div');
-      document.body.appendChild(div);
-      div.appendChild(document.createTextNode('Initializing...'));
-
-      if (clientSideID === '') {
-        div.replaceChild(document.createTextNode('Please edit index.html to set clientSideID to your LaunchDarkly client-side ID first'), div.firstChild);
-        return;
-      }
-
-      const ldclient = LDClient.initialize(clientSideID, context);
-
-      function render() {
-        const flagValue = ldclient.variation(flagKey, false);
-      const label = `The ${flagKey} feature flag evaluates to ${flagValue}.`;
-      document.body.style.background = flagValue ? '#00844B' : '#373841';
-        div.replaceChild(document.createTextNode(label), div.firstChild);
-      }
-
-      ldclient.on('initialized', () => {
-        div.replaceChild(document.createTextNode('SDK successfully initialized!'), div.firstChild);
-      });
-      ldclient.on('failed', () => {
-        div.replaceChild(document.createTextNode('SDK failed to initialize'), div.firstChild);
-      });
-      ldclient.on('ready', render);
-      ldclient.on('change', render);
-    }
-    main();
-    </script>
+      </tbody>
+      
+    </table>
+    <template id="contextrow">
+      <tr>
+        <td><pre><code class="context" class="language-javascript" ></code></pre></td>
+        <td><pre><code class="value" class="language-javascript"></code></pre></td>
+        <td><pre><code class="reason" class="language-javascript"></code></pre></td>
+      </tr>
+    </template>
   </body>
 </html>

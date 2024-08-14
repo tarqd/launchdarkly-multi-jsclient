@@ -7,6 +7,42 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  padding: 1rem;
 }
-
+thead th {
+  text-align: left;
+}
+/* change color of every other row in tbody */
+tbody tr:nth-child(odd) {
+  background-color: #434552;
+}
+tbody tr:hover {
+  background-color:#30313a;
+}
+td {
+  padding: 10px;
+  width: 10em;
+  text-align: left;
+}
+table {
+  width: 100%;
+}
+label {
+  min-width: 15em;
+  font-weight: bold;
+  display: inline-block;
+}
+input {
+  padding: .5em;
+}
+#clientId {
+  width: 24em;
+  
+}
+input[type="submit"] {
+  padding: .5em;
+  background: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  margin-top:1em;
+}
